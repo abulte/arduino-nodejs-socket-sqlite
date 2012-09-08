@@ -1,0 +1,33 @@
+<html>
+  <script src="/javascripts/smoothie.js" type="text/javascript"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+      // Randomly add a data point every 500ms
+      var temps = new TimeSeries();
+
+      // setInterval(function() {
+      //     var timestamp = new Date().getTime();
+      //     temps.append(timestamp, Math.random() * 1000);
+      //     console.log(temps);
+      //     //socket.emit('new_data', { 'timestamp': timestamp, 'temp': Math.random() * 1000});
+      //   }, 500);
+
+      var socket = io.connect('/');
+      socket.on('new_data', function (data) {
+        var timestamp = new Date().getTime();
+        temps.append(timestamp, data['temp']);       
+        console.log(temps);
+      });
+      
+      function createTimeline() {
+        var chart = new SmoothieChart();
+        chart.addTimeSeries(temps, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+        chart.streamTo(document.getElementById("chart"), 500);
+      }
+
+  </script>
+  <body onload="createTimeline()">
+    <h1>Live Temperature</h1>
+    <canvas id="chart" width="400" height="100"></canvas>
+  </body>
+</html>
