@@ -2,32 +2,35 @@
   <script src="/javascripts/smoothie.js" type="text/javascript"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-      // Randomly add a data point every 500ms
       var temps = new TimeSeries();
-
-      // setInterval(function() {
-      //     var timestamp = new Date().getTime();
-      //     temps.append(timestamp, Math.random() * 1000);
-      //     console.log(temps);
-      //     //socket.emit('new_data', { 'timestamp': timestamp, 'temp': Math.random() * 1000});
-      //   }, 500);
+      var loads = new TimeSeries();
 
       var socket = io.connect('/');
-      socket.on('new_data', function (data) {
+      socket.on('data_temp', function (data) {
         var timestamp = new Date().getTime();
         temps.append(timestamp, data['temp']);       
-        console.log(temps);
+      });
+
+      socket.on('data_cpu_load', function (data) {
+        var timestamp = new Date().getTime();
+        loads.append(timestamp, data['load']);
       });
       
       function createTimeline() {
         var chart = new SmoothieChart();
         chart.addTimeSeries(temps, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-        chart.streamTo(document.getElementById("chart"), 500);
+        chart.streamTo(document.getElementById("chart"), 1000);
+
+        var chartload = new SmoothieChart();
+        chartload.addTimeSeries(loads, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+        chartload.streamTo(document.getElementById("chart_cpu"), 1000);
       }
 
   </script>
   <body onload="createTimeline()">
-    <h1>Live Temperature</h1>
+    <h2>Live Temperature</h2>
     <canvas id="chart" width="400" height="100"></canvas>
+    <h2>Live CPU Load</h2>
+    <canvas id="chart_cpu" width="400" height="100"></canvas>
   </body>
 </html>

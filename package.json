@@ -9,6 +9,7 @@
     "express": "3.0.0rc4",
     "ejs": "*",
     "socket.io": "*",
-    "node-serialport": "*"
+    "node-serialport": "*",
+    "cpu-usage": "*"
   }
 }
