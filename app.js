@@ -38,5 +38,4 @@ server = http.createServer(app).listen(app.get('port'), function(){
 });
 
 //custom socket io code
-var io = require('./lib/ioevents');
-io.init(server);
+var io = require('./lib/ioevents')({server: server});
