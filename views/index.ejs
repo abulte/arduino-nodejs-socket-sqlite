@@ -1,36 +1,45 @@
 <html>
   <script src="/javascripts/smoothie.js" type="text/javascript"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-      var temps = new TimeSeries();
-      var loads = new TimeSeries();
+  <script src="/javascripts/client_ioevents.js" type="text/javascript"></script>
 
-      var socket = io.connect('/');
-      socket.on('data_temp', function (data) {
-        var timestamp = new Date().getTime();
-        temps.append(timestamp, data['temp']);       
-      });
+  <script src="/javascripts/flot/jquery.js" type="text/javascript"></script>
+  <script src="/javascripts/flot/jquery.flot.js" type="text/javascript"></script>
 
-      socket.on('data_cpu_load', function (data) {
-        var timestamp = new Date().getTime();
-        loads.append(timestamp, data['load']);
-      });
-      
-      function createTimeline() {
-        var chart = new SmoothieChart();
-        chart.addTimeSeries(temps, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-        chart.streamTo(document.getElementById("chart"), 1000);
-
-        var chartload = new SmoothieChart();
-        chartload.addTimeSeries(loads, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-        chartload.streamTo(document.getElementById("chart_cpu"), 1000);
-      }
-
+  <script type="text/javascript">
+    $(document).ready(function(){
+      //smoothie live charts
+      createTimeline();
+      // flot history
+      var options = {
+        grid: { hoverable: true }, 
+        series: {
+          lines: { show: true },
+          points: { show: true }
+        },
+        xaxis: {
+          mode: "time",
+          timeformat: "%d/%m/%y %H:%M"
+        },
+        yaxis: { max: 25 } 
+      };
+      populateTempHistory("#temp_history", options);
+    });
   </script>
-  <body onload="createTimeline()">
+
+  <body onload="">
+
+    <h2>° History</h2>
+    <div id="temp_history" style="width:600px;height:300px"></div>
+
     <h2>Live Temperature</h2>
     <canvas id="chart" width="400" height="100"></canvas>
+    
     <h2>Live CPU Load</h2>
     <canvas id="chart_cpu" width="400" height="100"></canvas>
+    
+    <h2>Live photoresistor reading</h2>
+    <canvas id="chart_light" width="400" height="100"></canvas>
+  
   </body>
 </html>
