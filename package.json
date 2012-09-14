@@ -10,6 +10,7 @@
     "ejs": "*",
     "socket.io": "*",
     "serialport": "*",
-    "cpu-usage": "*"
+    "cpu-usage": "*",
+    "sqlite3": "*"
   }
 }
