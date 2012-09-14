@@ -30,13 +30,13 @@ function populateTempHistory(selector, options){
 function createTimeline() {
   var chart = new SmoothieChart();
   chart.addTimeSeries(temps, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-  //chart.streamTo(document.getElementById("chart"), 1000);
+  chart.streamTo(document.getElementById("chart"), 1000);
 
   var chartload = new SmoothieChart();
   chartload.addTimeSeries(loads, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-  //chartload.streamTo(document.getElementById("chart_cpu"), 1000);
+  chartload.streamTo(document.getElementById("chart_cpu"), 1000);
 
-  var charlight = new SmoothieChart();
-  charlight.addTimeSeries(lights, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
-  //chartload.streamTo(document.getElementById("chart_light"), 1000);
+  var chartlight = new SmoothieChart();
+  chartlight.addTimeSeries(lights, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+  chartlight.streamTo(document.getElementById("chart_light"), 1000);
 } 
