@@ -21,7 +21,7 @@
           mode: "time",
           timeformat: "%d/%m/%y %H:%M"
         },
-        yaxis: { max: 25 } 
+        yaxis: { max: 500 } 
       };
       populateTempHistory("#temp_history", options);
     });
@@ -29,17 +29,17 @@
 
   <body onload="">
 
-    <h2>° History</h2>
+    <h2>History by hour</h2>
     <div id="temp_history" style="width:600px;height:300px"></div>
 
+    <h2>Live photoresistor reading</h2>
+    <canvas id="chart_light" width="400" height="100"></canvas>
+  
     <h2>Live Temperature</h2>
     <canvas id="chart" width="400" height="100"></canvas>
     
     <h2>Live CPU Load</h2>
     <canvas id="chart_cpu" width="400" height="100"></canvas>
     
-    <h2>Live photoresistor reading</h2>
-    <canvas id="chart_light" width="400" height="100"></canvas>
-  
   </body>
 </html>

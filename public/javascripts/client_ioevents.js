@@ -21,7 +21,7 @@ socket.on('data_light', function (data) {
 
 function populateTempHistory(selector, options){
   // get the temp history
-  socket.emit('fetch_temp_history', '', function(data){
+  socket.emit('fetch_history', '', function(data){
     console.log(data);
     $.plot($(selector), data, options);
   });
